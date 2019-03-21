@@ -1,25 +1,38 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import axios from "axios";
 
 class App extends Component {
+  state = {
+    users: null
+  };
+
+  componentDidMount = async () => {
+    try {
+      const users = await axios.get(
+        "https://lotr-quoter.herokuapp.com/api/users/"
+      );
+      this.setState({
+        users: users.data
+      });
+      console.log(users);
+    } catch (error) {
+      console.log(error);
+    }
+    // axios
+    //   .get("https://lotr-quoter.herokuapp.com/api/users/")
+    //   .then(res => console.log(res))
+    //   .catch(console.log());
+  };
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+    return this.state.users === null ? (
+      <div>
+        <p>loading</p>
+      </div>
+    ) : (
+      <div>
+        <p>hello world</p>
+        <p>{JSON.stringify(this.state.users)}</p>
       </div>
     );
   }
