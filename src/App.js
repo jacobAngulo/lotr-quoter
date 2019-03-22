@@ -1,38 +1,15 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Route } from "react-router-dom";
+import Home from "./components/Home";
+import ChrctrQts from "./components/ChrctrQts";
 
 class App extends Component {
-  state = {
-    users: null
-  };
-
-  componentDidMount = async () => {
-    try {
-      const users = await axios.get(
-        "https://lotr-quoter.herokuapp.com/api/users/"
-      );
-      this.setState({
-        users: users.data
-      });
-      console.log(users);
-    } catch (error) {
-      console.log(error);
-    }
-    // axios
-    //   .get("https://lotr-quoter.herokuapp.com/api/users/")
-    //   .then(res => console.log(res))
-    //   .catch(console.log());
-  };
-
   render() {
-    return this.state.users === null ? (
+    return (
       <div>
-        <p>loading</p>
-      </div>
-    ) : (
-      <div>
-        <p>hello world</p>
-        <p>{JSON.stringify(this.state.users)}</p>
+        <Route exact path="/" component={Home} />
+        <Route path="/:id" component={ChrctrQts} />
       </div>
     );
   }
